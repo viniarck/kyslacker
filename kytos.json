@@ -1,0 +1,11 @@
+{
+  "author": "AmLight",
+  "username": "viniciusarcanjo",
+  "name": "kyslacker",
+  "description": "NApp that sends slack notifications (via slacker)",
+  "version": "0.1",
+  "napp_dependencies": "",
+  "license": "GPL3.0",
+  "tags": ["experimental"],
+  "url": "http://github.com/viniciusarcanjo/kyslacker/"
+}
