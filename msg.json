@@ -1,0 +1,6 @@
+{
+  "channel": "randomtest",
+  "source": "kyslacker-client",
+  "tag": "INFO",
+  "payload": "L2circuit Y was provisioned for customer B"
+}
