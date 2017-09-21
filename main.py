@@ -4,7 +4,7 @@
 import requests
 import json
 from flask import request
-from kytos.core import KytosEvent, KytosNApp, log
+from kytos.core import KytosEvent, KytosNApp, log, rest
 from kytos.core.helpers import listen_to
 from napps.viniciusarcanjo.kyslacker import settings
 
@@ -26,7 +26,6 @@ class Main(KytosNApp):
             else:
                 self.slack = Slacker(settings.token)
                 self.error = Error
-                self._register_rest()
         except ImportError as e:
             log.error(
                 "Package slacker inst't installed. Please, pip install slacker"
@@ -40,9 +39,22 @@ class Main(KytosNApp):
             self.controller.unload_napp(self.username, self.name)
         pass
 
-    def _register_rest(self):
-        """Register REST endpoint
-        POST /kyslacker/send
+    def _parse_str(self, str1, msg):
+        """ Check if msg is a string and concatenate to str1
+
+        :str1: base string
+        :msg: string to be concatenated
+        :returns: str1 + msg
+
+        """
+        if isinstance(msg, str):
+            return str1 + " " + msg
+        # Otherwise just return the base string
+        return str1
+
+    @rest('send', methods=['POST'])
+    def rest_send(self):
+        """REST POST /api/viniciusarcanjo/kyslacker/send
 
         The following keys can be used in the json content.
         The 'payload' is mandatory
@@ -59,26 +71,6 @@ class Main(KytosNApp):
             'payload': 'L2circuit X was provisioned for customer A'
         }
 
-        """
-        endpoints = [('/kyslacker/send', self.rest_send, ['POST'])]
-        for endpoint in endpoints:
-            self.controller.register_rest_endpoint(*endpoint)
-
-    def _parse_str(self, str1, msg):
-        """ Check if msg is a string and concatenate to str1
-
-        :str1: base string
-        :msg: string to be concatenated
-        :returns: str1 + msg
-
-        """
-        if isinstance(msg, str):
-            return str1 + " " + msg
-        # Otherwise just return the base string
-        return str1
-
-    def rest_send(self):
-        """REST POST /kyslacker/send
         """
         try:
             ret = self._send(request.get_json())
