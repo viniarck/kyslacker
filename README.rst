@@ -11,6 +11,11 @@ You have two interfaces to send messages either via:
 
 As a result, kyslacker provides you a simple and common interface for Slack, which becomes even more important when you have several NApps and Apps that integrate with your network. Also, kyslacker keeps all Slack dependencies in this package (NApp), so you don't have to keep installing dependencies in other NApps.
 
+Demo
+====
+
+If you'd like to watch a demo of `kyslacker` check out this `video <https://www.youtube.com/watch?v=C_Q27SCW47E>`_
+
 
 User Stories
 ============
